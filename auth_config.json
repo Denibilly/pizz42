@@ -1,0 +1,5 @@
+{
+  "domain": "dev-2h53iakd.eu.auth0.com",
+  "clientId": "E8oSHFMeu6VIljxMBLEXRK3cpHEXjChB",
+  "audience": "http://localhost:3001/api/external"
+}
