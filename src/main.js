@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import store from "./assets/store";
 import { Auth0Plugin } from "./auth";
 import hljs from "highlight.js/lib/core";
 import "highlight.js/styles/github.css";

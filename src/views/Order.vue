@@ -1,57 +1,88 @@
 <template>
   <div class="text-center hero">
-    <img class="mb-3 app-logo" src="/42_full.jpg" alt="Vue.js logo" width="120" />
-    <h1 class="mb-4">This is the order page</h1>
-    <p class="lead">Please login to order a slice of our famous pizza</p>
-    <button @click="callApi">Call</button>
-    <p>{{ apiMessage }}</p>
+    <h2 class="mb-4">Cart ({{ $store.state.cartSize }})</h2>
+    <div v-if="$store.state.cart.length > 0" class="navbar-dropdown">
+      <b-container>
+        <b-row v-for="item in $store.state.cart" :key="item.id" class="navbar-item">
+          <b-col>
+            <img :src="'/'+item.images[0]" :alt="item.name" class="card-img-top">
+          </b-col>
+          <b-col class="textCol">
+          {{ item.name }} x <b>{{ item.quantity }}</b>
+          </b-col>
+          <b-col class="textCol">
+            £{{ item.totalPrice }}
+          </b-col>
+          <b-col class="textCol">
+            <b-button variant="danger" title="Remove from cart" @click.prevent="removeFromCart(item)">X</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+      <hr class="navbar-divider">
+      <div>Total: ${{ totalPrice }}</div>
+      <hr class="navbar-divider">
+      <b-button variant="success" @click="callApi($store.state.cart)">Checkout</b-button>
+    </div>
+    <div v-else class="navbar-dropdown is-boxed is-right">
+        <h5>
+            Cart is empty
+        </h5>
+    </div>
+    <p>{{ apiMessage[0] }}</p>
+    <p>{{ apiMessage[1] }}</p>
+    <p>{{ apiMessage[2] }}</p>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "Order",
   data() {
     return {
       apiMessage: ""
-    }
+    };
+  },
+  computed: {
+    totalPrice() {
+      return this.$store.getters.totalPrice;
+    },
   },
   methods: {
-    async callApi() {
-      const accessToken = await this.$auth.getTokenSilently( {
-        "client_id":"KONoVylUyfZMiHq5rbxdI0sKA4DA8LY8"
-      });
-      alert("token "+accessToken)
-      const result = await fetch('http://localhost:3001/api/external', {
-        method: 'get',
-        headers: { 
-          authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikp5ZzBaVUdWd2FCcEVjNmxSMnRuOCJ9.eyJpc3MiOiJodHRwczovL2Rldi0yaDUzaWFrZC5ldS5hdXRoMC5jb20vIiwic3ViIjoiS09Ob1Z5bFV5ZlpNaUhxNXJieGRJMHNLQTREQThMWThAY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9hcGkvZXh0ZXJuYWwiLCJpYXQiOjE2MTc5ODY4MTQsImV4cCI6MTYxODA3MzIxNCwiYXpwIjoiS09Ob1Z5bFV5ZlpNaUhxNXJieGRJMHNLQTREQThMWTgiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.d9s3ei4JnBZZw6EGDp4nxnTXfMKyDC_Dy_xyvoKGDCiog1lojJVpi06KtNT6p_V358RGfYjty4WOcRkWStd-qQRbBna-oa0d9mGFPW72bV9MNp2FfigEjA7kFjHBKhy9dyFiepKXFZNMqsyyTCmrD-sdm8RsRUPoDFw_R1y92PwX831I6_hRbQQcsI8s4n7n0Rg44ktybnDxbQhJkieztE35fKkrYE_3y8LYC_h5R-aOZ1LrOXbgbOrOHbobDrYN6HOyCdvvxSfBikOHWffb272c3X_vJKlF0-Q96h9MntNbWcxHB0o1CuiewZUvjTUzzVdLlwjtARGWwHR6J7NzgQ'
-          } 
-      });
-      this.apiMessage = await JSON.stringify(result);
-   }
-  }
-  /*
-    async callApi() {
-      // Get the access token from the auth wrapper
-      const token = await this.$auth.getIdTokenClaims();
-      // Use fetch to make a call to the API
-      const response = await fetch("http://localhost:3001/api/external", {
-        method: 'POST',
-        mode: "no-cors",
+    removeFromCart(item) {
+        this.$store.commit('removeFromCart', item);
+    },
+    async callApi(cart) {
+      const accessToken = await this.$auth.getTokenSilently();
+      const { data } = await axios.post("http://localhost:3001/api/external", {
+        data: cart,
+      },
+      {
         headers: {
-          Authorization: "Bearer "+token
-        },
-        body: JSON.stringify({
-          pizzaType: "Pizza"
-        })
-      });
-      this.apiMessage = JSON.stringify(response);
+          Authorization: "Bearer " + accessToken
+        }
+      })
+      this.apiMessage = data;
     }
   }
-  */
-};
-
+}
 
 </script>
+
+<style scoped>
+  .navbar-item {
+    background-color: #00639128!important;
+;
+  }
+  .hero {
+    max-width: none;
+  }
+  .textCol {
+    margin: auto;
+  }
+  .card-img-top {
+    width: 150px!important;
+    margin: 5px;
+  }
+</style>

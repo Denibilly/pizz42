@@ -11,7 +11,7 @@
             <h5 class="card-title">{{ product.name }}</h5>
             <div class="card-text">£{{ product.price }}</div>
             <div class="row justify-content-end">
-              <button class="btn btn-primary">Order online</button>
+              <button class="btn btn-primary" @click="addToCart(product)">Add to cart</button>
             </div>
           </div>
         </div>
@@ -23,12 +23,18 @@
 <script>
   export default {
     name: "HomeContent",
+    methods: {
+      addToCart(item) {
+          this.$store.commit('addToCart', item)
+      },
+    },
     computed: {
       store() {
         return this.$store.state;
       },
     },
   };
+
 </script>
 
 <style>

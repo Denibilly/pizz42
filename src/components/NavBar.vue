@@ -22,7 +22,7 @@
               <router-link to="/" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/order" class="nav-link">Order</router-link>
+              <router-link to="/order" class="nav-link">Order<span class='badge badge-warning' id='lblCartCount'>{{ cartSize }}</span></router-link>
             </li>
           </ul>
           <ul class="navbar-nav d-none d-md-block">
@@ -107,6 +107,11 @@ export default {
       this.$auth.logout();
       this.$router.push({ path: "/" });
     }
+  },
+  computed: {
+    cartSize() {
+      return this.$store.state.cartSize
+    }
   }
 };
 </script>
@@ -125,4 +130,26 @@ a.nav-link {
   min-height: 125px;
   justify-content: space-between;
 }
+
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #3e7cc4;
+    color: #fff;
+    padding: 3px 3px;
+    vertical-align: top;
+    margin-left: 5px; 
+}
+
 </style>
