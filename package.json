@@ -7,20 +7,24 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "npm-run-all --parallel serve api",
-    "api": "node server.js"
+    "api": "nodemon server.js"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^0.1.10",
+    "auth0": "^2.34.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^2.6.12",
     "cors": "^2.8.5",
+    "dotenv-webpack": "^7.0.2",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
+    "express-jwt-authz": "^2.4.1",
+    "helmet": "^4.4.1",
     "highlight.js": "^10.4.1",
     "https-proxy-agent": "^5.0.0",
     "js-cookie": "^2.2.1",
@@ -46,9 +50,6 @@
     "singleQuote": false,
     "semi": true
   },
-  "engines": {
-    "node": ">=12"
-  },
   "eslintConfig": {
     "root": true,
     "env": {
@@ -63,15 +64,7 @@
       "eslint:recommended"
     ],
     "rules": {
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "error",
-            "warn"
-          ]
-        }
-      ]
+      "no-console": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
