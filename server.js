@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 4040;
 
 //const checkScopes = jwtAuthz([ 'order:pizza' ]);
 
