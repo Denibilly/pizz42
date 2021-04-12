@@ -6,7 +6,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const helmet = require("helmet");
 const cors = require('cors');
-//const jwtAuthz = require('express-jwt-authz');
+const jwtAuthz = require('express-jwt-authz');
 
 /**
  * App Variables

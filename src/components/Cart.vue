@@ -39,13 +39,15 @@
         </h5>
     </div>
     <p>{{ apiMessage }}</p>
-    <p>{{ token }}</p>
+    <p>Permissions --> {{ permissions }}</p>
+    <p>Decoded token --> {{ token }}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Vue from 'vue';
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "Order",
@@ -53,6 +55,7 @@ export default {
     return {
       apiMessage: "",
       token: "",
+      permissions: "",
     };
   },
   computed: {
@@ -81,9 +84,10 @@ export default {
         this.$store.commit('removeFromCart', item);
     },
     async callApi(cart) {
-      if(this.$auth.user.email_verified){
-        const accessToken = await this.$auth.getTokenSilently();
-        this.token = accessToken;
+      const accessToken = await this.$auth.getTokenSilently();
+      this.token = jwt_decode(accessToken);
+      this.permissions = this.token.permissions;
+      if(this.$auth.user.email_verified && this.token.permissions.includes("order:pizza")){
         const { data } = await axios.post("/api/external", {
           data: cart,
         },
@@ -101,8 +105,11 @@ export default {
           Vue.set(this.$auth.user, 'user_metadata', [{date:this.getDate(), pizzas}]);
         }
       }
+      else if(!this.token.permissions.includes("order:pizza2")){
+        this.apiMessage = "Please check your user permissions to have access to 'order:pizza'.";
+      }
       else {
-        this.apiMessage = ["", "Please verify your email before ordering with us. Thank you"]
+        this.apiMessage = "Please verify your email before ordering with us. Thank you";
       }
     }
   }
