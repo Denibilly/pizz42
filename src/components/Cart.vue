@@ -83,7 +83,7 @@ export default {
     async callApi(cart) {
       if(this.$auth.user.email_verified){
         const accessToken = await this.$auth.getTokenSilently();
-        //this.token = accessToken;
+        this.token = accessToken;
         const { data } = await axios.post("/api/external", {
           data: cart,
         },

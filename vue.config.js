@@ -3,7 +3,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   devServer: {
-    port: 3000
+    port: 5001
   },
   configureWebpack: {
     plugins: [
@@ -18,7 +18,7 @@ module.exports = {
     devServer: {
       proxy: {
         "/api": {
-          target: "http://localhost:4040"
+          target: "http://localhost:5000"
         }
       }
     }
