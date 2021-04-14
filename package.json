@@ -9,7 +9,8 @@
     "dev": "npm-run-all --parallel serve api",
     "api": "nodemon --max_old_space_size=2560 server.js",
     "api_start": "node --max_old_space_size=2560 server.js",
-    "start": "npm-run-all --parallel serve api_start"
+    "start": "npm-run-all --parallel serve api_start",
+    "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build ; fi "
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.5",
@@ -23,7 +24,6 @@
     "core-js": "^2.6.12",
     "cors": "^2.8.5",
     "dotenv-webpack": "^7.0.2",
-    "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "express-jwt-authz": "^2.4.1",
     "helmet": "^4.4.1",
@@ -46,11 +46,13 @@
     "@vue/eslint-config-prettier": "^3.0.5",
     "babel-eslint": "^10.1.0",
     "chokidar": "^3.5.1",
-    "watchpack-chokidar2": "^2.0.1",
+    "express": "^4.17.1",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
     "sass-loader": "^7.3.1",
-    "vue-template-compiler": "^2.6.12"
+    "serve-static": "^1.14.1",
+    "vue-template-compiler": "^2.6.12",
+    "watchpack-chokidar2": "^2.0.1"
   },
   "prettier": {
     "singleQuote": false,

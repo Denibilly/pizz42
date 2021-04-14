@@ -3,13 +3,20 @@ const express = require("express");
 const { join } = require("path");
 const morgan = require("morgan");
 const app = express();
+const serveStatic = require("serve-static")
+
 var port = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
-app.use(express.static(join(__dirname, "dist")));
 
-app.use("*", (_, res) => {
+/*
+app.use(express.static(join(__dirname, "dist")));
+app.use((_, res) => {
   res.sendFile(join(__dirname, "dist", "index.html"));
 });
+*/
+
+app.use(serveStatic(path.join(__dirname, 'dist')));
+
 
 app.listen(port, () => console.log("Listening on port "+port));
