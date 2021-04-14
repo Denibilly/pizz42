@@ -37,7 +37,9 @@
     "vue": "^2.6.12",
     "vue-router": "^3.4.9",
     "vuex": "^3.6.2",
-    "vuex-persistedstate": "*"
+    "vuex-persistedstate": "*",
+    "watchpack-chokidar2": "^2.0.1",
+    "@vue/cli-service": "^3.12.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.1",
