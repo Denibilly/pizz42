@@ -19,7 +19,7 @@ var port = process.env.PORT || 4040;
  */
 app.use(helmet());
 app.use(cors());
-app.use(cors({ origin: "http://localhost:5001" }));
+app.use(cors({ origin: ["http://localhost:5001","https://pizz42.herokuapp.com/"] }));
 app.use(express.json())
 app.use(
   express.urlencoded({
