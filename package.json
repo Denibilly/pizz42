@@ -10,7 +10,7 @@
     "api": "nodemon --max_old_space_size=2560 server.js",
     "api_start": "node --max_old_space_size=2560 server.js",
     "start": "npm-run-all --parallel serve api_start",
-    "heroku-postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm install && npm run build ; fi "
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.5",
