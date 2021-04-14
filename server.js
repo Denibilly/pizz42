@@ -6,13 +6,12 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const helmet = require("helmet");
 const cors = require('cors');
-const jwtAuthz = require('express-jwt-authz');
 
 /**
  * App Variables
  */
 var app = express();
-var port = process.env.PORT || 4040;
+var port = process.env.PORT || 5000;
 
 /**
  *  App Configuration
@@ -35,8 +34,6 @@ app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
-//const checkScopes = jwtAuthz([ 'order:pizza' ]);
 
 var jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
