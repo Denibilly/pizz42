@@ -7,8 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "npm-run-all --parallel serve api",
-    "api": "nodemon server.js",
-    "api_start": "node server.js",
+    "api": "nodemon --max_old_space_size=2560 server.js",
+    "api_start": "node --max_old_space_size=2560 server.js",
     "start": "npm-run-all --parallel serve api_start"
   },
   "dependencies": {
