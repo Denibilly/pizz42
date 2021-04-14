@@ -8,12 +8,8 @@ var port = process.env.PORT || 3000;
 app.use(morgan("dev"));
 app.use(express.static(join(__dirname, "dist")));
 
-app.use((_, res) => {
+app.use("*", (_, res) => {
   res.sendFile(join(__dirname, "dist", "index.html"));
-});
-
-app.get('/', function(request, response) {
-  response.send('Hello World!');
 });
 
 app.listen(port, () => console.log("Listening on port "+port));
