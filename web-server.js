@@ -16,7 +16,8 @@ app.use((_, res) => {
 });
 */
 
-app.use(serveStatic(path.join(__dirname, 'dist')));
-
+app.get('/', function (req, res) {
+  res.render(path.join(__dirname + '/dist/index.html'))
+})
 
 app.listen(port, () => console.log("Listening on port "+port));
