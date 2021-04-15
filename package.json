@@ -7,10 +7,10 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "npm-run-all --parallel serve api",
-    "api": "nodemon --max_old_space_size=2560 server.js",
-    "api_start": "node --max_old_space_size=2560 server.js",
+    "api_start": "nodemon --max_old_space_size=2560 server.js",
     "vue_start": "node --max_old_space_size=2560 web-server.js",
-    "start": "npm-run-all --parallel vue_start api_start",
+    "api": "node --max_old_space_size=2560 server.js",
+    "start": "npm-run-all --parallel serve api_start",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
