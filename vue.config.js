@@ -17,11 +17,6 @@ module.exports = {
       hot: true,
       port: 5001,
       proxy: {
-        '/*':{
-          target: 'http://localhost:5001',
-          secure: false,
-          ws: false,
-        },
         "/api": {
           target: "http://localhost:5000",
           secure: false,
