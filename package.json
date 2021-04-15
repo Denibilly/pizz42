@@ -10,7 +10,7 @@
     "api_start": "nodemon --max_old_space_size=2560 server.js",
     "vue_start": "node --max_old_space_size=2560 web-server.js",
     "api": "node --max_old_space_size=2560 server.js",
-    "start": "npm-run-all --parallel serve api_start",
+    "start": "npm-run-all --parallel serve api",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
