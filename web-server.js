@@ -1,20 +1,11 @@
 
 var path = require('path');
 var express = require("express");
-const morgan = require("morgan");
 
-var appDir = path.dirname(require.main.filename);
 var port = process.env.PORT || 5001;
 var app = express();
 
-
-app.use(morgan("dev"));
-app.use(express.logger());
-app.use(express.compress());
-app.use(express.bodyParser());
-app.use(express.static(path.join(appDir, '/dist'), { maxAge: 86400000 }));
-
-console.log("APP DIR ---> "+appDir)
+app.use(express.static(__dirname + '/dist/'));
 
 //handle any errors
 app.use(function(err, req, res, next){
@@ -23,9 +14,10 @@ app.use(function(err, req, res, next){
 });
 
 // Render the app
-app.get('/',function(req, res){//get,put,post,delete   
-  res.sendFile(appDir + '/index.html');
+app.get('/.*/',function(req, res){
+  res.sendFile(__dirname + '/dist/index.html');
 });
+
 
 //start server
 app.listen(port, function() {
