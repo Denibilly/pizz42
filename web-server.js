@@ -1,19 +1,20 @@
 
-
-app.listen(port, () => console.log("Listening on port "+port));
-
 var path = require('path');
 var express = require("express");
 const morgan = require("morgan");
+
+var appDir = path.dirname(require.main.filename);
+var port = process.env.PORT || 5001;
 var app = express();
 
-var port = process.env.PORT || 5001;
 
 app.use(morgan("dev"));
 app.use(express.logger());
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.static(path.join(__dirname, '/dist'), { maxAge: 86400000 }));
+app.use(express.static(path.join(appDir, '/dist'), { maxAge: 86400000 }));
+
+console.log("APP DIR ---> "+appDir)
 
 //handle any errors
 app.use(function(err, req, res, next){
@@ -23,7 +24,7 @@ app.use(function(err, req, res, next){
 
 // Render the app
 app.get('/',function(req, res){//get,put,post,delete   
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(appDir + '/index.html');
 });
 
 //start server
