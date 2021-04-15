@@ -9,9 +9,10 @@
     "lint": "vue-cli-service lint",
     "dev": "npm-run-all --parallel serve api",
     "api_start": "nodemon --max_old_space_size=2560 server.js",
-    "vue_start": "node --max_old_space_size=2560 web-server.js",
+    "start": "node --max_old_space_size=2560 web-server.js",
     "api": "node --max_old_space_size=2560 server.js",
-    "start": "npm-run-all --parallel serve api"
+    "old": "npm-run-all --parallel serve api",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.5",
