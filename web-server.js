@@ -23,8 +23,8 @@ app.use(function(err, req, res, next){
 });
 
 // Render the app
-app.get('/', function(req, res) {
-  res.sendfile(path.join(__dirname, '../dist/index.html'));
+app.get('/',function(req, res){//get,put,post,delete   
+  res.sendFile(__dirname + '../dist/index.html');
 });
 
 //start server
