@@ -15,7 +15,7 @@ app.use(history({
 
 app.use(staticFileMiddleware);
 
-const port = 5001;
+const port = process.env.PORT || 5001;
 
 app.listen(port, function () {
   console.log("App now running on port "+port);
