@@ -2,6 +2,7 @@
   "name": "pizz42",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://localhost:5000",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -10,8 +11,7 @@
     "api_start": "nodemon --max_old_space_size=2560 server.js",
     "vue_start": "node --max_old_space_size=2560 web-server.js",
     "api": "node --max_old_space_size=2560 server.js",
-    "start": "npm-run-all --parallel serve api",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+    "start": "npm-run-all --parallel serve api"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.13.5",

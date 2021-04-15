@@ -13,8 +13,6 @@ module.exports = {
       })
     ],
     devServer: {
-      host: 'localhost',
-      hot: true,
       port: 5001,
       proxy: {
         "/api": {
@@ -23,6 +21,9 @@ module.exports = {
           ws: false,
         }
       },
+    },
+    output: {
+      publicPath: "/"
     }
   }
 };
