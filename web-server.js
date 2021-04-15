@@ -1,25 +1,24 @@
 
-var path = require('path');
-var express = require("express");
+const express = require('express');
+const path = require('path');
+const history = require('connect-history-api-fallback');
 
-var port = process.env.PORT || 5001;
-var app = express();
+const app = express();
 
-app.use(express.static(__dirname + '/dist/'));
+const staticFileMiddleware = express.static(path.join(__dirname + '/dist'));
 
-//handle any errors
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.send(500, 'Something broke!');
+app.use(staticFileMiddleware);
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
+app.use(staticFileMiddleware);
+
+app.get('/', function (req, res) {
+  res.render(path.join(__dirname + '/dist/index.html'));
 });
 
-// Render the app
-app.get('/.*/',function(req, res){
-  res.sendFile(__dirname + '/dist/index.html');
-});
-
-
-//start server
-app.listen(port, function() {
-  console.log("Listening on " + port);
+var server = app.listen(process.env.PORT || 5001, function () {
+  var port = server.address().port;
+  console.log("App now running on port", port);
 });
