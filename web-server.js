@@ -12,13 +12,20 @@ app.use(history({
   disableDotRule: true,
   verbose: true
 }));
+
 app.use(staticFileMiddleware);
 
 app.get('/', function (req, res) {
   res.render(path.join(__dirname + '/dist/index.html'));
 });
 
-const port = process.env.PORT || 5001;
-var server = app.listen(port, function () {
-  console.log("App now running on port", port);
+app.get(/.*/, function(req, res) {
+  res.render(path.join(__dirname + '/dist/index.html'));
+});
+
+//const port = process.env.PORT || 8080;
+const port = 5001;
+
+app.listen(port, function () {
+  console.log("App now running on port "+port);
 });
