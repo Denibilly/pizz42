@@ -3,7 +3,7 @@
     <h2 class="mb-4">Cart ({{ $store.state.cartSize }})</h2>
     <div v-if="$store.state.cart.length > 0" class="navbar-dropdown">
       <hr class="navbar-divider">
-      <b-container class="navbar-item">
+      <b-container class="cart-item">
         <b-row v-for="item in $store.state.cart" :key="item.id" >
           <b-col>
             <img :src="'/'+item.images[0]" :alt="item.name" class="card-img-top">
@@ -39,8 +39,10 @@
         </h5>
     </div>
     <p>{{ apiMessage }}</p>
-    <p>Permissions --> {{ permissions }}</p>
-    <p>Decoded token --> {{ token }}</p>
+    <!--
+    <p>Permissions: {{ permissions }}</p>
+    <p>Decoded token: {{ token }}</p>
+    -->
   </div>
 </template>
 
@@ -78,7 +80,7 @@ export default {
       // current minutes
       let minutes = date_ob.getMinutes();
       // prints date in YYYY-MM-DD format
-      return date + "-" + month + "-" + year + " " + hours + ":" + minutes;
+      return date + "-" + month + "-" + year + " " + hours + ":" + ("0" + minutes).slice(-2);
     },
     removeFromCart(item) {
         this.$store.commit('removeFromCart', item);
@@ -99,10 +101,11 @@ export default {
         this.apiMessage = "Order has been confirmed";
         let pizzas = data.map(item => ({"name":item.name, "quantity":item.quantity, "price":item.totalPrice, "images": item.images}));
         if(this.$auth.user.user_metadata){
-          this.$auth.user.user_metadata.push({date:this.getDate(), pizzas});
+          let newIndex = this.$auth.user.user_metadata[this.$auth.user.user_metadata.length-1].index+1;
+          this.$auth.user.user_metadata.push({index:newIndex, date:this.getDate(), pizzas});
         }
         else {
-          Vue.set(this.$auth.user, 'user_metadata', [{date:this.getDate(), pizzas}]);
+          Vue.set(this.$auth.user, 'user_metadata', [{index:0, date:this.getDate(), pizzas}]);
         }
       }
       else if(!this.token.permissions.includes("order:pizza2")){
@@ -118,7 +121,7 @@ export default {
 </script>
 
 <style scoped>
-  .navbar-item {
+  .cart-item {
     background-color: #00639128!important;
   }
   .row { 
