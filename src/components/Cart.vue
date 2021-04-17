@@ -88,7 +88,7 @@ export default {
       this.token = jwt_decode(accessToken);
       this.permissions = this.token.permissions;
       if(this.$auth.user.email_verified && this.token.permissions.includes("order:pizza")){
-        const { data } = await axios.post("/api/external", {
+        const { data } = await axios.post("https://api-pizz.herokuapp.com//api/external", {
           data: cart,
         },
         {
