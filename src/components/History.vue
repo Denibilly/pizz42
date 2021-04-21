@@ -4,12 +4,12 @@
     <div v-if="historyLength > 0" class="navbar-dropdown">
       <hr class="navbar-divider">
       <b-container class="navbar-item">
-        <b-row v-for="item in history" :key="item.id">
+        <b-row v-for="order in history" :key="order.index">
           <b-col>
-            <a href="" v-b-toggle="'order'+item.index" @click="historyClick">{{ item.date }} </a>
-            <b-collapse :id="'order'+item.index">
+            <a href="" v-b-toggle="'order'+order.index" @click="historyClick">{{ order.date }} </a>
+            <b-collapse :id="'order'+order.index">
               <b-container class="history-item">
-                <b-row v-for="pizza in item.cart" :key="pizza.id" >
+                <b-row v-for="pizza in order.cart" :key="pizza.id" >
                   <b-col>
                     <img :src="'/'+pizza.images[0]" :alt="pizza.name" class="card-img-top">
                   </b-col>
@@ -56,7 +56,6 @@ export default {
   methods: {
       historyClick(e) {
           e.preventDefault();
-          console.log(this);
           this.showSection = !this.showSection;         
       }
   },
