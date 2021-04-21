@@ -39,10 +39,8 @@
         </h5>
     </div>
     <p>{{ apiMessage }}</p>
-    <!--
     <p>Permissions: {{ permissions }}</p>
     <p>Decoded token: {{ token }}</p>
-    -->
   </div>
 </template>
 
@@ -90,8 +88,9 @@ export default {
       this.token = jwt_decode(accessToken);
       this.permissions = this.token.permissions;
       if(this.$auth.user.email_verified && this.token.permissions.includes("order:pizza")){
-        const { data } = await axios.post("https://api-pizz.herokuapp.com/api/external", {
-          data: cart,
+        const response = await axios.post("/api/external", {
+        //const { data } = await axios.post("https://api-pizz.herokuapp.com/api/external", {
+          data: {"userId": this.token.sub, "cart": cart, "history": this.$auth.user.user_metadata},
         },
         {
           headers: {
@@ -99,13 +98,14 @@ export default {
           }
         })
         this.apiMessage = "Order has been confirmed";
-        let pizzas = data.map(item => ({"name":item.name, "quantity":item.quantity, "price":item.totalPrice, "images": item.images}));
+        const orderHistory = response.data;
+        console.log("Order history");
+        console.log(JSON.parse(JSON.stringify(orderHistory)));
         if(this.$auth.user.user_metadata){
-          let newIndex = this.$auth.user.user_metadata[this.$auth.user.user_metadata.length-1].index+1;
-          this.$auth.user.user_metadata.push({index:newIndex, date:this.getDate(), pizzas});
+          this.$auth.user.user_metadata = orderHistory;
         }
         else {
-          Vue.set(this.$auth.user, 'user_metadata', [{index:0, date:this.getDate(), pizzas}]);
+          Vue.set(this.$auth.user, 'user_metadata', orderHistory);
         }
       }
       else if(!this.token.permissions.includes("order:pizza2")){
