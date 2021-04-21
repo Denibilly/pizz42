@@ -9,7 +9,7 @@
             <a href="" v-b-toggle="'order'+item.index" @click="historyClick">{{ item.date }} </a>
             <b-collapse :id="'order'+item.index">
               <b-container class="history-item">
-                <b-row v-for="pizza in item.pizzas" :key="pizza.date" >
+                <b-row v-for="pizza in item.cart" :key="pizza.id" >
                   <b-col>
                     <img :src="'/'+pizza.images[0]" :alt="pizza.name" class="card-img-top">
                   </b-col>
